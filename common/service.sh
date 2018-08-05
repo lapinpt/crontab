@@ -6,19 +6,25 @@ MODDIR=${0%/*}
 # This script will be executed in late_start service mode
 # More info in the main Magisk thread
 # TimeZoon 8,China. I do not known how to use tzselect
-export TZ=Asia/Shanghai
-#
-mktouch /data/crontabs/root 2</dev/null
-#
-#a shell file 
-mktouch /data/cronsh/zd.sh 2</dev/null
-chmod 766 /data/cronsh/zd.sh 2</dev/null
-#cron start 
-#cron enable
-#date > /data/cron.log;
+export TZ=Europe/Lisbon
 
-#change the path
-crond -c /data/crontabs 
-#crond -l 1-L /sdcard/cron_error.log
+# mkdir -p '/data/crontabs' ; touch '/data/crontabs/root'
+# Test log date every 5 minutes
+# echo '*/5 * * * * date > /sdcard/cronlogdate.txt' >> /data/crontabs/root
+# @reboot dont work
+
+#a shell file 
+#mktouch /data/cronsh/zd.sh 2</dev/null
+#chmod 755 /data/cronsh/zd.sh 2</dev/null
+
+# change the path
+# -c DIR  Cron dir. Default:/var/spool/cron/crontabs
+# -l N    Set log level. Most verbose 0, default 8
+# -L FILE Log to FILE
+
+# crond -l 4 -L '/data/local/crondebug.log' -c '/data/crontabs'
+
+crond -c '/data/crontabs'
+
 # This script will be executed in late_start service mode
 # More info in the main Magisk thread
